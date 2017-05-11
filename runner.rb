@@ -6,4 +6,4 @@ def parse(filename)
   end
 end
 
-parse()
+parse("jr_data_engineer_assignment.csv")
