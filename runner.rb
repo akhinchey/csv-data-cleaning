@@ -1,8 +1,10 @@
 require "csv"
+require_relative "entry"
 
 def parse(filename)
   CSV.foreach(filename, :headers => true, :header_converters => :symbol).map do |row|
-      p row.to_hash
+      entry = Entry.new(row.to_hash)
+      p entry 
   end
 end
 
