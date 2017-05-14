@@ -46,20 +46,42 @@ def check_first_and_second_words(arr_of_entries)
   end
 end
 
+def check_for_mid_keywords(arr_of_entries)
+  words_to_check_for = ["Provides", "Is", "Offers"]
+  arr_of_entries.each do |entry|
+    words = entry.description.split(" ")
+    key_word = words.find { |word| words_to_check_for.include?(word) }
+
+    if key_word
+      index = words.index(key_word)
+      entry.description = words[0...index].join(" ") + " " + words[index..-1].join(" ").downcase
+    end
+  end
+end
+
+
+
+
+
+
+
 entries = []
 
 parse("jr_data_engineer_assignment.csv", entries)
 
 type_cased_entries = entries.select { |entry| entry.is_type_cased? }
 
-type_cased_entries.each {|entry| puts entry.description}
 
 check_first_words(type_cased_entries)
 check_first_and_second_words(type_cased_entries)
+check_for_mid_keywords(type_cased_entries)
+
+
+type_cased_entries.each {|entry| puts entry.description}
 
 p type_cased_entries.size
-
 p type_cased_entries.select { |entry| entry.is_type_cased? }.count
+
 
 # save("jr_data_engineer_assignment.csv", entries)
 
