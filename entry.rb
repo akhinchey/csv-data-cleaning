@@ -8,7 +8,7 @@ class Entry
     @description = args.fetch(:description, "")
   end
 
-  def is_type_cased?
+  def is_title_cased?
     description.split(" ").each do |word|
       return false if word != word.capitalize
     end
