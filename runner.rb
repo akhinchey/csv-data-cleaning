@@ -47,12 +47,12 @@ def check_first_and_second_words(arr_of_entries)
 end
 
 def check_for_mid_keywords(arr_of_entries)
-  words_to_check_for = ["Provides", "Is", "Offers"]
+  words_to_check_for = ["Provides", "Is", "Offers", "Offer", "Serves", "Sells", "Helps", "Strives", "Distributes", "Handles", "Assists"]
   arr_of_entries.each do |entry|
     words = entry.description.split(" ")
     key_word = words.find { |word| words_to_check_for.include?(word) }
 
-    if key_word
+    if key_word && words.index(key_word) != 0 && words.index(key_word) < 6
       index = words.index(key_word)
       entry.description = words[0...index].join(" ") + " " + words[index..-1].join(" ").downcase
     end
@@ -69,21 +69,29 @@ entries = []
 
 parse("jr_data_engineer_assignment.csv", entries)
 
-type_cased_entries = entries.select { |entry| entry.is_type_cased? }
+title_cased_entries = entries.select { |entry| entry.is_title_cased? }
 
 
-check_first_words(type_cased_entries)
-check_first_and_second_words(type_cased_entries)
-check_for_mid_keywords(type_cased_entries)
+check_first_words(title_cased_entries)
+check_first_and_second_words(title_cased_entries)
+check_for_mid_keywords(title_cased_entries)
 
 
-type_cased_entries.each {|entry| puts entry.description}
 
-p type_cased_entries.size
-p type_cased_entries.select { |entry| entry.is_type_cased? }.count
+p title_cased_entries.size
+p title_cased_entries.select { |entry| entry.is_title_cased? }.count
+
+title_cased_entries.select { |e| e.is_title_cased? }.each do |e|
+    e.description.capitalize!
+  end
 
 
-# save("jr_data_engineer_assignment.csv", entries)
+# title_cased_entries.select { |entry| entry.description.include?("provides")}.each do |entry|
+#     puts entry.description
+#   end
+title_cased_entries.each {|entry| puts entry.description}
+
+save("practice.csv", title_cased_entries)
 
 # the...
 # is
