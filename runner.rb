@@ -59,6 +59,16 @@ def check_for_mid_keywords(arr_of_entries)
   end
 end
 
+def check_for_periods(arr_of_entries)
+  arr_of_entries.each do |entry|
+    sentences = entry.description.split(". ")
+    sentences.each do |sentence|
+      sentence[0] = sentence[0].upcase
+    end
+    entry.description = sentences.join(". ")
+  end
+end
+
 
 
 
@@ -76,22 +86,20 @@ check_first_words(title_cased_entries)
 check_first_and_second_words(title_cased_entries)
 check_for_mid_keywords(title_cased_entries)
 
-
-
-p title_cased_entries.size
-p title_cased_entries.select { |entry| entry.is_title_cased? }.count
+# p title_cased_entries.size
+# p title_cased_entries.select { |entry| entry.is_title_cased? }.count
 
 title_cased_entries.select { |e| e.is_title_cased? }.each do |e|
     e.description.capitalize!
   end
 
-
+check_for_periods(title_cased_entries)
 # title_cased_entries.select { |entry| entry.description.include?("provides")}.each do |entry|
 #     puts entry.description
 #   end
 title_cased_entries.each {|entry| puts entry.description}
 
-save("practice.csv", title_cased_entries)
+# save("practice.csv", title_cased_entries)
 
 # the...
 # is
