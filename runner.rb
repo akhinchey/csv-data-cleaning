@@ -94,6 +94,7 @@ def capitalize_words(arr_of_entries)
                           "Wednesday",
                           "Thursday",
                           "Friday",
+                          "Saturday",
                           "Jesus",
                           "Christ",
                           "Baptist",
@@ -101,6 +102,12 @@ def capitalize_words(arr_of_entries)
                           "Medicare"
                           ]
   arr_of_entries.each do |entry|
+    words = entry.description.split(" ")
+    words.each do |word|
+      if words_to_check_for.any? { |cap_word| word.capitalize.include?(cap_word) }
+        entry.description.gsub!(word, word.capitalize)
+      end
+    end
   end
 end
 
@@ -113,6 +120,8 @@ entries = []
 parse("jr_data_engineer_assignment.csv", entries)
 
 title_cased_entries = entries.select { |entry| entry.is_title_cased? }
+
+title_cased_entries.each {|entry| puts entry.description}
 
 
 check_first_words(title_cased_entries)
@@ -127,7 +136,9 @@ check_for_periods(title_cased_entries)
 
 upcase_acronyms(title_cased_entries)
 
-title_cased_entries.each {|entry| puts entry.description}
+capitalize_words(title_cased_entries)
+
+# title_cased_entries.each {|entry| puts entry.description}
 
 # save("practice.csv", title_cased_entries)
 
