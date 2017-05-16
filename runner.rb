@@ -41,7 +41,7 @@ clean_descriptions(title_cased_entries)
 
 title_cased_entries.each {|entry| puts entry.description}
 
-# save("practice.csv", title_cased_entries)
+save("practice.csv", title_cased_entries)
 
 
 
