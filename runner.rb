@@ -2,13 +2,11 @@ require "csv"
 require_relative "entry"
 
 
-
 def parse(filename, arr_or_entries)
   CSV.foreach(filename, :headers => true, :header_converters => :symbol).map do |row|
       arr_or_entries << Entry.new(row.to_hash)
   end
 end
-
 
 def save(filename, arr_or_entries)
   CSV.open(filename, "wb") do |csv|
@@ -18,7 +16,6 @@ def save(filename, arr_or_entries)
     end
   end
 end
-
 
 def clean_descriptions(arr_of_entries)
   arr_of_entries.each do |entry|

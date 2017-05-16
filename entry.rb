@@ -16,15 +16,15 @@ class Entry
   end
 
   def check_first_words
+    words_to_check_for = [ "Provide",
+                            "Offer",
+                            "A",
+                            "An",
+                            "Program"
+                          ]
+
     first_word = description.split(" ")[0]
-    if first_word == "Provides" || 
-      first_word == "Offers" ||
-      first_word == "A" ||
-      first_word == "An" ||
-      first_word == "Provide" ||
-      first_word == "Program" ||
-      first_word == "Offer" ||
-      first_word[-1] == "s"
+    if words_to_check_for.include?(first_word) || first_word[-1] == "s"
       description.capitalize!
     end
   end
