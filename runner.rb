@@ -69,7 +69,47 @@ def check_for_periods(arr_of_entries)
   end
 end
 
+def capitalize_remainder(arr_of_entries)
+  arr_of_entries.select { |entry| entry.is_title_cased? }.each do |entry|
+      entry.description.capitalize!
+    end
+end
 
+def upcase_acronyms(arr_of_entries)
+  acronyms = ["NYC", "GED", "HIV", "AIDS", "CPR"]
+  arr_of_entries.each do |entry|
+    words = entry.description.split(" ")
+    words.each do |word|
+      if acronyms.any? { |acronym| word.upcase == acronym }
+        entry.description.gsub!(word, word.upcase)
+      end
+    end
+  end
+end
+
+def capitalize_words(arr_of_entries)
+  words_to_check_for = [ "Sunday",
+                          "Monday",
+                          "Tuesday",
+                          "Wednesday",
+                          "Thursday",
+                          "Friday",
+                          "Saturday",
+                          "Jesus",
+                          "Christ",
+                          "Baptist",
+                          "Medicaid",
+                          "Medicare"
+                          ]
+  arr_of_entries.each do |entry|
+    words = entry.description.split(" ")
+    words.each do |word|
+      if words_to_check_for.any? { |cap_word| word.capitalize.include?(cap_word) }
+        entry.description.gsub!(word, word.capitalize)
+      end
+    end
+  end
+end
 
 
 
@@ -81,48 +121,28 @@ parse("jr_data_engineer_assignment.csv", entries)
 
 title_cased_entries = entries.select { |entry| entry.is_title_cased? }
 
+title_cased_entries.each {|entry| puts entry.description}
+
 
 check_first_words(title_cased_entries)
+
 check_first_and_second_words(title_cased_entries)
+
 check_for_mid_keywords(title_cased_entries)
 
-# p title_cased_entries.size
-# p title_cased_entries.select { |entry| entry.is_title_cased? }.count
-
-title_cased_entries.select { |e| e.is_title_cased? }.each do |e|
-    e.description.capitalize!
-  end
+capitalize_remainder(title_cased_entries)
 
 check_for_periods(title_cased_entries)
-# title_cased_entries.select { |entry| entry.description.include?("provides")}.each do |entry|
-#     puts entry.description
-#   end
-title_cased_entries.each {|entry| puts entry.description}
+
+upcase_acronyms(title_cased_entries)
+
+capitalize_words(title_cased_entries)
+
+# title_cased_entries.each {|entry| puts entry.description}
 
 # save("practice.csv", title_cased_entries)
 
-# the...
-# is
-# provides
-# offers
-# "acronyms" - how to detect
 
 
 
-
-
-# 2.1.2 :025 > arr = "Hello World Provides Some Kind Of Service"
-#  => "Hello World Provides Some Kind Of Service" 
-# 2.1.2 :026 > arr = arr.split(" ")
-#  => ["Hello", "World", "Provides", "Some", "Kind", "Of", "Service"] 
-# 2.1.2 :027 > split_index = arr.index("Provides")
-#  => 2 
-# 2.1.2 :028 > split_index
-#  => 2 
-# 2.1.2 :029 > arr[0...split_index].join(" ")
-#  => "Hello World" 
-# 2.1.2 :030 > arr[0...split_index].join(" ") + arr[split_index..-1].join(" ")
-#  => "Hello WorldProvides Some Kind Of Service" 
-# 2.1.2 :031 > arr[0...split_index].join(" ") + " " + arr[split_index..-1].join(" ").downcase
-#  => "Hello World provides some kind of service"
 
