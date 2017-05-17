@@ -27,7 +27,8 @@ class Entry
                             "Offer",
                             "A",
                             "An",
-                            "Program"
+                            "Program",
+                            "This"
                           ]
 
     first_word = get_words[0]
@@ -59,8 +60,8 @@ class Entry
                             "Handles", 
                             "Assists"
                           ]
-                          
-    get_words[1..5].each do |word|
+
+    get_words[1..7].each do |word|
       if words_to_check_for.any? { |check_word| word.include?(check_word) }
         index = get_words.index(word)
         @description = get_words[0...index].join(" ") + " " + get_words[index..-1].join(" ").downcase
@@ -90,6 +91,8 @@ class Entry
                   "HIV", 
                   "AIDS", 
                   "CPR",
+                  "NYS",
+                  "USDA",
                   "MS"
                 ]
 
@@ -115,7 +118,8 @@ class Entry
                             "Catholic",
                             "Lutheran",
                             "Medicaid",
-                            "Medicare"
+                            "Medicare",
+                            "English"
                             ]
 
     get_words.each do |word|
