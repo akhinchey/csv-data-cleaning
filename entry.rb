@@ -31,7 +31,7 @@ class Entry
                           ]
 
     first_word = get_words[0]
-    if words_to_check_for.include?(first_word) || first_word[-1] == "s"
+    if words_to_check_for.any? {|check_word| check_word == first_word } || first_word[-1] == "s"
       description.capitalize!
     end
   end
@@ -59,12 +59,13 @@ class Entry
                             "Handles", 
                             "Assists"
                           ]
-
-    key_word = get_words.find { |word| words_to_check_for.include?(word) }
-
-    if key_word && get_words.index(key_word) != 0 && get_words.index(key_word) < 6
-      index = get_words.index(key_word)
-      @description = get_words[0...index].join(" ") + " " + get_words[index..-1].join(" ").downcase
+                          
+    get_words[1..5].each do |word|
+      if words_to_check_for.any? { |check_word| word.include?(check_word) }
+        index = get_words.index(word)
+        @description = get_words[0...index].join(" ") + " " + get_words[index..-1].join(" ").downcase
+        break
+      end
     end
   end
 
